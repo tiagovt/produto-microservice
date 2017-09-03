@@ -1,0 +1,26 @@
+server:
+  port: 8765
+  
+  
+zuul:
+  ignoredServices: '*'
+  routes:
+    post:
+      path: /produto/**
+      stripPrefix: false
+      serviceId: produto-service
+      sensitiveHeaders:
+    uaa:
+      path: /uaa/**
+      sensitiveHeaders:
+      serviceId: auth-server
+    
+---
+spring:
+  profiles: docker
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

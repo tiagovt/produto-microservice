@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  discovery-service:
+    build: discovery-service
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8761:8761"
+    expose:
+     - "8761"
+  edge-service:
+    build: edge-service
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8765:8765"
+    expose:
+     - "8765"
+    depends_on:
+     - discovery-service
+
+  produto-service:
+    build: produto-service
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - 8080
+    #expose:
+     #- "8080"
+    depends_on:
+     - discovery-service
+     - edge-service
+    links:
+     - discovery-service
+     - edge-service
+      
