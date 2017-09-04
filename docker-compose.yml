@@ -1,5 +1,14 @@
 version: '3.1'
 services:
+  config-server:
+    build: config-server
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8888:8888"
+    expose:
+     - "8888"
   discovery-service:
     build: discovery-service
     #restart: always
@@ -9,6 +18,8 @@ services:
      - "8761:8761"
     expose:
      - "8761"
+    links:
+     - config-server
   edge-service:
     build: edge-service
     #restart: always
@@ -20,7 +31,7 @@ services:
      - "8765"
     depends_on:
      - discovery-service
-
+     - config-server
   produto-service:
     build: produto-service
     #restart: always
@@ -33,7 +44,9 @@ services:
     depends_on:
      - discovery-service
      - edge-service
+     - config-server
     links:
      - discovery-service
      - edge-service
+     - config-server
       

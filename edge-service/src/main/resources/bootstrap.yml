@@ -1,3 +1,12 @@
 spring:
   application:
     name: edge-service
+  cloud:
+    config:
+      uri: http://localhost:8888/config-server
+---
+spring:
+  profiles: docker
+  cloud:
+     config:
+        uri: http://config-server:8888/config-server

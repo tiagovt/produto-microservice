@@ -1,2 +1,2 @@
 
-include "discovery-service", "produto-service"
+include "discovery-service", "config-server", "edge-service", "produto-service"

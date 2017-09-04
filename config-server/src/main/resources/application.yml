@@ -1,0 +1,39 @@
+server:
+  port: ${PORT:8888}
+  contextPath: /config-server
+
+logging:
+  levels:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: DEBUG
+
+spring:
+  boot:
+    admin:
+      url: http://localhost:7070
+      #username: admin
+      #password: admin123
+management:
+  security:
+    enabled: false      
+    
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /admin/info
+    healthCheckUrlPath: /admin/health
+#    metadataMap:
+#      password: ${security.user.password}
+#  client:
+    #serviceUrl:
+    #  defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:password@localhost:8761}/eureka/
+
+---
+spring:
+  profiles: docker
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
