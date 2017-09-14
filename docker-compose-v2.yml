@@ -10,7 +10,7 @@ services:
     expose:
      - "8888"
   discovery-service:
-    image: iagovt/produtomicroservice_discovery-service
+    image: tiagovt/produtomicroservice_discovery-service
     #restart: always
     environment:
      - environment=docker
@@ -37,7 +37,7 @@ services:
     #restart: always
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
     environment:
      - environment=docker
     ports:
