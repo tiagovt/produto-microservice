@@ -1,0 +1,55 @@
+version: '3.3'
+services:
+  config-server:
+    image: tiagovt/produtomicroservice_config-server
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8888:8888"
+    expose:
+     - "8888"
+  discovery-service:
+    image: iagovt/produtomicroservice_discovery-service
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8761:8761"
+    expose:
+     - "8761"
+    links:
+     - config-server
+  edge-service:
+    image: tiagovt/produtomicroservice_edge-service
+    #restart: always
+    environment:
+     - environment=docker
+    ports:
+     - "8765:8765"
+    expose:
+     - "8765"
+    depends_on:
+     - discovery-service
+     - config-server
+  produto-service:
+    image: tiagovt/produtomicroservice_produto-service
+    #restart: always
+    deploy:
+      mode: replicated
+      replicas: 3
+    environment:
+     - environment=docker
+    ports:
+     - 8080
+    #expose:
+     #- "8080"
+    depends_on:
+     - discovery-service
+     - edge-service
+     - config-server
+    links:
+     - discovery-service
+     - edge-service
+     - config-server
+      
