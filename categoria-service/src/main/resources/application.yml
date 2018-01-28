@@ -1,0 +1,37 @@
+server:
+  port: 8081
+  context-path: /categoria
+
+eureka:
+  client:
+    registryFetchIntervalSeconds: 3
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+teste: Tiago Teixeira profile
+
+management:
+  security:
+    enabled: false
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      database: categoria
+
+
+---
+spring:
+  profiles: docker
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+
+server:
+  port: 8081
+  context-path: /categoria
+teste: Tiago Teixeira profile DOCKER  
